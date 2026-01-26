@@ -19,12 +19,13 @@ module.exports = {
   async execute(interaction: any) {
     const userid =
       interaction.options.getString("user") ?? "No userID Provided";
-    console.log(userid);
+
     let ban = await getBan(interaction.client.db, userid);
     console.log("Ban found:", ban);
     const modal = new ModalBuilder()
       .setCustomId("editBanModal")
-      .setTitle("Ban Edit Form");
+      .setTitle("Ban Edit Form")
+      .setDefault("TEST");
     const userInput = new TextInputBuilder()
       .setCustomId("userInput")
       .setStyle(TextInputStyle.Short)
