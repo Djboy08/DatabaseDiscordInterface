@@ -52,7 +52,8 @@ module.exports = {
           .setLabel("Unbanned")
           .setDescription("Unbanned")
           .setValue("Unbanned"),
-      );
+      )
+      .setValue(ban && ban.Banned ? "Banned" : "Unbanned");
     const isBannedLabel = new LabelBuilder()
       .setLabel("Enforced ban")
       // Set string select menu as component of the label
