@@ -35,7 +35,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
-client.db = mongoClient.db(Bun.env.DATABASENAME);
+client.db = await mongoClient.db(Bun.env.DATABASENAME);
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 for (const folder of commandFolders) {
