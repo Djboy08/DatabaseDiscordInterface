@@ -24,13 +24,13 @@ module.exports = {
     console.log("Ban found:", ban);
     const modal = new ModalBuilder()
       .setCustomId("editBanModal")
-      .setTitle("Ban Edit Form")
-      .setDefault("TEST");
+      .setTitle("Ban Edit Form");
     const userInput = new TextInputBuilder()
       .setCustomId("userInput")
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("User ID/Username")
-      .setRequired(true);
+      .setRequired(true)
+      .setValue(ban ? ban.UserID : "");
     const userLabel = new LabelBuilder()
       .setLabel("User ID/Username")
       .setDescription("User to ban")
@@ -39,7 +39,8 @@ module.exports = {
       .setCustomId("unbanDateInput")
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("5D, 12H, 1Y, etc. Leave blank for permanent ban.")
-      .setRequired(false);
+      .setRequired(false)
+      .setValue(ban ? formatUnbanDate(ban.UnbanDate) : "");
     const unbanLabel = new LabelBuilder()
       .setLabel("When should the ban be lifted?")
       .setDescription("Unban Date")
@@ -47,7 +48,8 @@ module.exports = {
     const reasonInput = new TextInputBuilder()
       .setCustomId("reasonInput")
       .setStyle(TextInputStyle.Paragraph)
-      .setPlaceholder("exploiting, abusing, etc.");
+      .setPlaceholder("exploiting, abusing, etc.")
+      .setValue(ban ? ban.Reason : "");
 
     const reasonLabel = new LabelBuilder()
       .setLabel("What is the reason for the ban?")
@@ -57,7 +59,8 @@ module.exports = {
     const proofInput = new TextInputBuilder()
       .setCustomId("proofInput")
       .setStyle(TextInputStyle.Paragraph)
-      .setPlaceholder("Links, etc.");
+      .setPlaceholder("Links, etc.")
+      .setValue(ban ? ban.Proof : "");
 
     const proofLabel = new LabelBuilder()
       .setLabel("What is the proof for the ban?")
@@ -72,3 +75,37 @@ module.exports = {
     await interaction.showModal(modal);
   },
 };
+function formatUnbanDate(UnbanDate: any): string {
+  const durationRegex = /(\d+)([DHMYS])/;
+  const match = UnbanDate.match(durationRegex);
+  if (!match) return "";
+
+  const value = parseInt(match[1]);
+  const unit = match[2];
+
+  const now = new Date();
+  let unbanDate = new Date(now);
+
+  switch (unit) {
+    case "D":
+      unbanDate.setDate(now.getDate() + value);
+      break;
+    case "H":
+      unbanDate.setHours(now.getHours() + value);
+      break;
+    case "M":
+      unbanDate.setMinutes(now.getMinutes() + value);
+      break;
+    case "S":
+      unbanDate.setSeconds(now.getSeconds() + value);
+      break;
+    case "Y":
+      unbanDate.setFullYear(now.getFullYear() + value);
+      break;
+  }
+
+  return unbanDate.toISOString();
+  if (!UnbanDate) return "";
+  const date = new Date(UnbanDate);
+  return date.toISOString().slice(0, 10); // Format as YYYY-MM-DD
+}
