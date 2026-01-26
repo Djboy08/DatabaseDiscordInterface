@@ -3,13 +3,9 @@ export function getBan(db: any, userId: string) {
     const collection = db.collection("Bans");
     console.log("Searching for ban with UserID:", userId);
     console.log(collection);
-    collection
-      .find({
-        UserID: userId,
-      })
-      .toArray((err: any, docs: any) => {
-        console.log(docs);
-        resolve(docs);
-      });
+    let g = collection.find({
+      UserID: userId,
+    });
+    console.log(g);
   });
 }
