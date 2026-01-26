@@ -80,6 +80,7 @@ module.exports = {
     modal.addLabelComponents(unbanLabel);
     modal.addLabelComponents(reasonLabel);
     modal.addLabelComponents(proofLabel);
+    modal.addTextDisplayComponents(text);
 
     await interaction.showModal(modal);
   },
