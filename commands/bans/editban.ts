@@ -6,6 +6,7 @@ const {
   ModalBuilder,
   TextInputStyle,
   TextInputBuilder,
+  TextDisplayBuilder,
 } = require("discord.js");
 
 module.exports = {
@@ -66,6 +67,14 @@ module.exports = {
       .setLabel("What is the proof for the ban?")
       .setDescription("Proof")
       .setTextInputComponent(proofInput);
+
+    //   Fetch the discord user's name from the admin id (discord id)
+    const admin = await interaction.client.users.fetch(
+      ban ? ban.AdminID : "New",
+    );
+    const text = new TextDisplayBuilder().setContent(
+      `${admin ? admin.username : "New"}`,
+    );
 
     modal.addLabelComponents(userLabel);
     modal.addLabelComponents(unbanLabel);
