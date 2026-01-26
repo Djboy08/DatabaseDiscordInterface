@@ -40,7 +40,7 @@ module.exports = {
       .setStyle(TextInputStyle.Short)
       .setPlaceholder("5D, 12H, 1Y, etc. Leave blank for permanent ban.")
       .setRequired(false)
-      .setValue(ban ? formatUnbanDate(ban.UnbanDate) : "");
+      .setValue(ban && ban.UnbanDate ? formatUnbanDate(ban.UnbanDate) : "");
     const unbanLabel = new LabelBuilder()
       .setLabel("When should the ban be lifted?")
       .setDescription("Unban Date")
@@ -77,7 +77,7 @@ module.exports = {
 };
 function formatUnbanDate(UnbanDate: any): string {
   const durationRegex = /(\d+)([DHMYS])/;
-  const match = UnbanDate.match(durationRegex);
+  const match = UnbanDate.toString().match(durationRegex);
   if (!match) return "";
 
   const value = parseInt(match[1]);
