@@ -47,13 +47,14 @@ module.exports = {
           // Description of option
           .setDescription("Banned")
           // Value returned to you in modal submission
-          .setValue("Banned"),
+          .setValue("Banned")
+          .setDefault(ban && ban.Banned === true),
         new StringSelectMenuOptionBuilder()
           .setLabel("Unbanned")
           .setDescription("Unbanned")
-          .setValue("Unbanned"),
-      )
-      .setValue(ban && ban.Banned === true ? "Banned" : "Unbanned");
+          .setValue("Unbanned")
+          .setDefault(ban && ban.Banned === false),
+      );
     const isBannedLabel = new LabelBuilder()
       .setLabel("Enforced ban")
       // Set string select menu as component of the label
