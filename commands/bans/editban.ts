@@ -7,6 +7,8 @@ const {
   TextInputStyle,
   TextInputBuilder,
   TextDisplayBuilder,
+  StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder,
 } = require("discord.js");
 
 module.exports = {
@@ -32,6 +34,29 @@ module.exports = {
       .setPlaceholder("User ID/Username")
       .setRequired(true)
       .setValue(ban ? ban.UserID : "");
+    const isBannedInput = new StringSelectMenuBuilder()
+      .setCustomId("isBanned")
+      .setPlaceholder("Is the user banned?")
+      // Modal only property on select menus to prevent submission, defaults to true
+      .setRequired(true)
+      .addOptions(
+        // String select menu options
+        new StringSelectMenuOptionBuilder()
+          // Label displayed to user
+          .setLabel("Banned")
+          // Description of option
+          .setDescription("Banned")
+          // Value returned to you in modal submission
+          .setValue("Banned"),
+        new StringSelectMenuOptionBuilder()
+          .setLabel("Unbanned")
+          .setDescription("Unbanned")
+          .setValue("Unbanned"),
+      );
+    const isBannedLabel = new LabelBuilder()
+      .setLabel("Enforced ban")
+      // Set string select menu as component of the label
+      .setStringSelectMenuComponent(isBannedInput);
     const userLabel = new LabelBuilder()
       .setLabel("User ID/Username")
       .setDescription("User to ban")
@@ -77,6 +102,7 @@ module.exports = {
     );
 
     modal.addLabelComponents(userLabel);
+    modal.addLabelComponents(isBannedLabel);
     modal.addLabelComponents(unbanLabel);
     modal.addLabelComponents(reasonLabel);
     modal.addLabelComponents(proofLabel);
