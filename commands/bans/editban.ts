@@ -61,16 +61,16 @@ module.exports = {
       .setLabel("User ID/Username")
       .setDescription("User to ban")
       .setTextInputComponent(userInput);
-    const unbanDateInput = new TextInputBuilder()
-      .setCustomId("unbanDateInput")
-      .setStyle(TextInputStyle.Short)
-      .setPlaceholder("5D, 12H, 1Y, etc. Leave blank for permanent ban.")
-      .setRequired(false)
-      .setValue(ban && ban.UnbanDate ? formatUnbanDate(ban.UnbanDate) : "");
-    const unbanLabel = new LabelBuilder()
-      .setLabel("When should the ban be lifted?")
-      .setDescription("Unban Date")
-      .setTextInputComponent(unbanDateInput);
+    // const unbanDateInput = new TextInputBuilder()
+    //   .setCustomId("unbanDateInput")
+    //   .setStyle(TextInputStyle.Short)
+    //   .setPlaceholder("5D, 12H, 1Y, etc. Leave blank for permanent ban.")
+    //   .setRequired(false)
+    //   .setValue(ban && ban.UnbanDate ? formatUnbanDate(ban.UnbanDate) : "");
+    // const unbanLabel = new LabelBuilder()
+    //   .setLabel("When should the ban be lifted?")
+    //   .setDescription("Unban Date")
+    //   .setTextInputComponent(unbanDateInput);
     const reasonInput = new TextInputBuilder()
       .setCustomId("reasonInput")
       .setStyle(TextInputStyle.Paragraph)
@@ -103,7 +103,7 @@ module.exports = {
 
     modal.addLabelComponents(userLabel);
     modal.addLabelComponents(isBannedLabel);
-    modal.addLabelComponents(unbanLabel);
+    // modal.addLabelComponents(unbanLabel);
     modal.addLabelComponents(reasonLabel);
     modal.addLabelComponents(proofLabel);
     modal.addTextDisplayComponents(text);
