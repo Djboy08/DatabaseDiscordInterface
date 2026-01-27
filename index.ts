@@ -76,10 +76,33 @@ setInterval(() => {
   unbanLengthCheckDatabase(client.db);
 }, 1000 * 60);
 
-let BANS = null;
+let BANS: any = null;
 setInterval(async () => {
   BANS = await getBans(client.db);
   console.log(BANS);
 }, 1000 * 8);
+
+const server = Bun.serve({
+  // `routes` requires Bun v1.2.3+
+  routes: {
+    // Static routes
+    "/api/bansv4": (req) => {
+      if (BANS) {
+        console.log("Serving BANS:", BANS);
+        return Response.json(BANS);
+      } else {
+        return Response.json({ success: false });
+      }
+    },
+  },
+
+  // (optional) fallback for unmatched routes:
+  // Required if Bun's version < 1.2.3
+  fetch(req) {
+    return new Response("Not Found", { status: 404 });
+  },
+});
+
+console.log(`Server running at ${server.url}`);
 
 client.login(Bun.env.DISCORD_TOKEN);
