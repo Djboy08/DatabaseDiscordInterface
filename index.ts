@@ -110,7 +110,7 @@ const server = Bun.serve({
     const hostname = host?.split(":")[0]; // remove port
     const subdomain = hostname?.split(".")[0];
 
-    if (subdomain === "api" && req.url.endsWith("/api/bansv4")) {
+    if (subdomain === "api" && req.url.endsWith("/bansv4")) {
       if (BANS) {
         return Response.json(BANS);
       } else {
