@@ -46,7 +46,7 @@ module.exports = {
       });
       await webhookClient.send({
         ...embed,
-        content: `Ban updated by ${obj.AdminName} (${obj.AdminID})`,
+        // content: `Ban updated by ${obj.AdminName} (${obj.AdminID})`,
       });
       //   await interaction.reply({
       //     content: "Your submission was received successfully!",
