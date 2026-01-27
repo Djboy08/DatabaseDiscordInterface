@@ -1,8 +1,13 @@
 import { type Interaction } from "discord.js";
 const { messageservice_send_payload } = require("../opencloud-helper");
 const { updateBan } = require("../database-helper");
-const { sendBanEmbed } = require("../discord-helper");
-const { Collection, Events, MessageFlags } = require("discord.js");
+const { getBanEmbed } = require("../discord-helper");
+const {
+  Collection,
+  Events,
+  MessageFlags,
+  WebhookClient,
+} = require("discord.js");
 
 module.exports = {
   name: Events.InteractionCreate,
@@ -34,7 +39,15 @@ module.exports = {
           },
         });
       }
-      await sendBanEmbed(interaction, obj);
+      let embed = getBanEmbed(obj);
+      await interaction.reply({ ...embed, flags: MessageFlags.Ephemeral });
+      const webhookClient = new WebhookClient({
+        url: "https://discord.com/api/webhooks/id/token",
+      });
+      await webhookClient.send({
+        content: `Ban updated by ${obj.AdminName} (${obj.AdminID})`,
+        embeds: [embed.embeds[0]],
+      });
       //   await interaction.reply({
       //     content: "Your submission was received successfully!",
       //   });

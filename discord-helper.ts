@@ -1,16 +1,13 @@
-export async function sendBanEmbed(
-  interaction: any,
-  {
-    UserID,
-    Banned,
-    Length,
-    Reason,
-    Proof,
-    UnbanDate,
-    AdminName,
-    TestUniverse,
-  }: any,
-) {
+export async function getBanEmbed({
+  UserID,
+  Banned,
+  Length,
+  Reason,
+  Proof,
+  UnbanDate,
+  AdminName,
+  TestUniverse,
+}: any) {
   let data = {
     embeds: [
       {
@@ -49,5 +46,5 @@ export async function sendBanEmbed(
       },
     ],
   };
-  await interaction.reply(data);
+  return data;
 }
