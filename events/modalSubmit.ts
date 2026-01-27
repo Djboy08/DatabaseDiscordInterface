@@ -40,13 +40,14 @@ module.exports = {
         });
       }
       let embed = getBanEmbed(obj);
-      //   await interaction.reply({ ...embed, flags: MessageFlags.Ephemeral });
+      console.log({ ...embed });
+      await interaction.reply({ ...embed, flags: MessageFlags.Ephemeral });
       const webhookClient = new WebhookClient({
         url: Bun.env.DISCORD_BAN_LOG_WEBHOOK_URL,
       });
       await webhookClient.send({
         ...embed,
-        // content: `Ban updated by ${obj.AdminName} (${obj.AdminID})`,
+        content: `Ban updated by ${obj.AdminName} (${obj.AdminID})`,
       });
       //   await interaction.reply({
       //     content: "Your submission was received successfully!",
