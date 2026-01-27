@@ -46,12 +46,12 @@ module.exports = {
           .setDescription("Banned")
           // Value returned to you in modal submission
           .setValue("Banned")
-          .setDefault(ban && ban.Banned === true),
+          .setDefault(ban ? ban.Banned === true : false),
         new StringSelectMenuOptionBuilder()
           .setLabel("Unbanned")
           .setDescription("Unbanned")
           .setValue("Unbanned")
-          .setDefault(ban && ban.Banned === false),
+          .setDefault(ban ? ban.Banned === false : false),
       );
     const isBannedLabel = new LabelBuilder()
       .setLabel("Enforced ban")
