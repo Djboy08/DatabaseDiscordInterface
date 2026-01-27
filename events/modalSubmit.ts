@@ -1,5 +1,5 @@
 import { type Interaction } from "discord.js";
-import { updateBan } from "../database-helper";
+const { updateBan } = require("../database-helper");
 const { Collection, Events, MessageFlags } = require("discord.js");
 
 module.exports = {
