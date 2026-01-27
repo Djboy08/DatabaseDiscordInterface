@@ -14,9 +14,13 @@ for (const folder of commandFolders) {
     // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
+        console.log(`Importing command from file: ${filePath}`);
         const command = require(filePath);
+        console.log(`Imported command: ${JSON.stringify(command)}`);
         if ('data' in command && 'execute' in command) {
+            console.log(`Loading command ${command.data.name} from ${filePath}`);
             commands.push(command.data.toJSON());
+            console.log(`Loaded command ${command.data.name}`);
         } else {
             console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
         }

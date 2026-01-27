@@ -17,11 +17,11 @@ module.exports = {
     .setName("editban")
     .setDescription("Opens up a modal to edit a ban for a user.")
     .addStringOption((option: any) =>
-      option.setName("UserID").setDescription("UserID"),
+      option.setName("userid").setDescription("Roblox UserID"),
     ),
   async execute(interaction: any) {
     const userid =
-      interaction.options.getString("UserID") ?? "No userID Provided";
+      interaction.options.getString("userid") ?? "No userID Provided";
     let ban = await getBan(interaction.client.db, userid);
     console.log("Ban found:", ban);
     const modal = new ModalBuilder()
