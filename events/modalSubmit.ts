@@ -8,7 +8,7 @@ module.exports = {
     if (!interaction.isModalSubmit()) return;
 
     try {
-      console.log("Modal submitted:", interaction);
+      //   console.log("Modal submitted:", interaction);
       let obj: any = {};
       obj.Banned =
         interaction.fields.getStringSelectValues("isBanned")[0] === "Banned";
