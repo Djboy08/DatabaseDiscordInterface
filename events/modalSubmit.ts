@@ -19,7 +19,7 @@ module.exports = {
       obj.Length = 0;
       obj.UnbanDate = null;
       obj.TestUniverse = false;
-      //   await updateBan(interaction.client.db, obj);
+      await updateBan(interaction.client.db, obj);
       console.log("Parsed modal data:", obj);
       await interaction.reply({
         content: "Your submission was received successfully!",
