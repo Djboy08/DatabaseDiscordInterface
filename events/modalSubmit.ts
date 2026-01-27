@@ -1,4 +1,5 @@
 import { type Interaction } from "discord.js";
+import { updateBan } from "../database-helper";
 const { Collection, Events, MessageFlags } = require("discord.js");
 
 module.exports = {
@@ -8,6 +9,18 @@ module.exports = {
 
     try {
       console.log("Modal submitted:", interaction);
+      let obj: any = {};
+      obj.Banned =
+        interaction.fields.getStringSelectValues("isBanned")[0] === "Banned";
+      obj.UserID = interaction.fields.getTextInputValue("userInput");
+      obj.Reason = interaction.fields.getTextInputValue("reasonInput");
+      obj.Proof = interaction.fields.getTextInputValue("proofInput");
+      obj.AdminID = interaction.user.id;
+      obj.Length = 0;
+      obj.UnbanDate = null;
+      obj.TestUniverse = false;
+      //   await updateBan(interaction.client.db, obj);
+      console.log("Parsed modal data:", obj);
       await interaction.reply({
         content: "Your submission was received successfully!",
       });
