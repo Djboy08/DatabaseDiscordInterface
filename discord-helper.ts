@@ -1,4 +1,4 @@
-export async function getBanEmbed({
+export function getBanEmbed({
   UserID,
   Banned,
   Length,
