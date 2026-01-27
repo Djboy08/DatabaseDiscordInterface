@@ -26,7 +26,14 @@ const mongoClient = new MongoClient(Bun.env.DATABASEURL);
 await mongoClient.connect();
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildPresences,
+  ],
+});
 // When the client is ready, run this code (only once).
 // The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
 // It makes some properties non-nullable.
@@ -79,7 +86,6 @@ setInterval(() => {
 let BANS: any = null;
 setInterval(async () => {
   BANS = await getBans(client.db);
-  console.log(BANS);
 }, 1000 * 8);
 
 const server = Bun.serve({
@@ -88,7 +94,6 @@ const server = Bun.serve({
     // Static routes
     "/api/bansv4": (req) => {
       if (BANS) {
-        console.log("Serving BANS:", BANS);
         return Response.json(BANS);
       } else {
         return Response.json({ success: false });
