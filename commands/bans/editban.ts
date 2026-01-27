@@ -20,9 +20,8 @@ module.exports = {
       option.setName("userid").setDescription("Roblox UserID"),
     ),
   async execute(interaction: any) {
-    const userid =
-      interaction.options.getString("userid") ?? "No userID Provided";
-    let ban = await getBan(interaction.client.db, userid);
+    const userid = interaction.options.getString("userid") ?? undefined;
+    let ban = userid ? await getBan(interaction.client.db, userid) : null;
     console.log("Ban found:", ban);
     const modal = new ModalBuilder()
       .setCustomId("editBanModal")
@@ -95,9 +94,9 @@ module.exports = {
       .setTextInputComponent(proofInput);
 
     //   Fetch the discord user's name from the admin id (discord id)
-    const admin = await interaction.client.users.fetch(
-      ban ? ban.AdminID : "New",
-    );
+    const admin = ban
+      ? await interaction.client.users.fetch(ban.AdminID)
+      : { username: "Admin not found" };
     const text = new TextDisplayBuilder().setContent(
       `${admin ? admin.username : "New"}`,
     );
