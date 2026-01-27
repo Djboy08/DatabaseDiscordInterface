@@ -24,14 +24,16 @@ module.exports = {
       obj.TestUniverse = false;
       await updateBan(interaction.client.db, obj);
       console.log("Parsed modal data:", obj);
-      await messageservice_send_payload({
-        type: "ban",
-        for: obj.UserID,
-        payload: {
-          reason: obj.Reason,
-          TestUniverse: obj.TestUniverse,
-        },
-      });
+      if (obj.Banned === true) {
+        await messageservice_send_payload({
+          type: "ban",
+          for: obj.UserID,
+          payload: {
+            reason: obj.Reason,
+            TestUniverse: obj.TestUniverse,
+          },
+        });
+      }
       await sendBanEmbed(interaction, obj);
       //   await interaction.reply({
       //     content: "Your submission was received successfully!",
