@@ -35,3 +35,40 @@ export async function updateBan(db: any, banData: any) {
 
   return result;
 }
+
+export async function unbanLengthCheckDatabase(db: any) {
+  const collection = db.collection("Bans");
+  await collection.updateMany(
+    {
+      Length: {
+        $ne: 0,
+      },
+      Banned: true,
+      UnbanDate: {
+        $lte: new Date(),
+      },
+    },
+    {
+      $set: {
+        Banned: false,
+      },
+    },
+  );
+}
+
+export async function getBans(db: any) {
+  const collection = db.collection("Bans");
+  let result = await collection
+    .find({
+      Banned: true,
+    })
+    .project({
+      _id: 0,
+      UserID: 1,
+      Reason: 1,
+      TestUniverse: 1,
+    })
+    .toArray();
+
+  return result;
+}

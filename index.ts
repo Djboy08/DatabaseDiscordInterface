@@ -11,6 +11,7 @@ import type { Client as ClientType } from "discord.js";
 const fs = require("node:fs");
 const path = require("node:path");
 const { MongoClient } = require("mongodb");
+const { unbanLengthCheckDatabase, getBans } = require("./database-helper");
 
 // Extend Client with commands property
 declare module "discord.js" {
@@ -71,4 +72,14 @@ for (const file of eventFiles) {
 }
 
 // Log in to Discord with your client's token
+setInterval(() => {
+  unbanLengthCheckDatabase(client.db);
+}, 1000 * 60);
+
+let BANS = null;
+setInterval(async () => {
+  BANS = await getBans(client.db);
+  console.log(BANS);
+}, 1000 * 8);
+
 client.login(Bun.env.DISCORD_TOKEN);
