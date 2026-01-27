@@ -1,4 +1,5 @@
 import { type Interaction } from "discord.js";
+const { messageservice_send_payload } = require("../opencloud-helper");
 const { updateBan } = require("../database-helper");
 const { sendBanEmbed } = require("../discord-helper");
 const { Collection, Events, MessageFlags } = require("discord.js");
@@ -23,6 +24,14 @@ module.exports = {
       obj.TestUniverse = false;
       await updateBan(interaction.client.db, obj);
       console.log("Parsed modal data:", obj);
+      await messageservice_send_payload({
+        type: "ban",
+        for: obj.UserID,
+        payload: {
+          reason: obj.Reason,
+          TestUniverse: obj.TestUniverse,
+        },
+      });
       await sendBanEmbed(interaction, obj);
       //   await interaction.reply({
       //     content: "Your submission was received successfully!",
