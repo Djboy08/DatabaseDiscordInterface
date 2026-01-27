@@ -42,7 +42,7 @@ module.exports = {
       let embed = getBanEmbed(obj);
       await interaction.reply({ ...embed, flags: MessageFlags.Ephemeral });
       const webhookClient = new WebhookClient({
-        url: "https://discord.com/api/webhooks/id/token",
+        url: Bun.env.DISCORD_BAN_LOG_WEBHOOK_URL,
       });
       await webhookClient.send({
         content: `Ban updated by ${obj.AdminName} (${obj.AdminID})`,
