@@ -1,5 +1,6 @@
 import { type Interaction } from "discord.js";
-const { updateBan, sendBanEmbed } = require("../database-helper");
+const { updateBan } = require("../database-helper");
+const { sendBanEmbed } = require("../discord-helper");
 const { Collection, Events, MessageFlags } = require("discord.js");
 
 module.exports = {
