@@ -40,7 +40,8 @@ module.exports = {
         });
       }
       let embed = getBanEmbed(obj);
-      console.log({ ...embed });
+      console.log({ ...embed }, "1");
+      console.log(embed, "2");
       await interaction.reply({ ...embed, flags: MessageFlags.Ephemeral });
       const webhookClient = new WebhookClient({
         url: Bun.env.DISCORD_BAN_LOG_WEBHOOK_URL,
