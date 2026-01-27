@@ -12,7 +12,7 @@ module.exports = {
       let obj: any = {};
       obj.Banned =
         interaction.fields.getStringSelectValues("isBanned")[0] === "Banned";
-      obj.UserID = interaction.fields.getTextInputValue("userInput");
+      obj.UserID = interaction.fields.getTextInputValue("userInput").trim();
       obj.Reason = interaction.fields.getTextInputValue("reasonInput");
       obj.Proof = interaction.fields.getTextInputValue("proofInput");
       obj.AdminID = interaction.user.id;

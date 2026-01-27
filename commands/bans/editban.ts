@@ -17,12 +17,11 @@ module.exports = {
     .setName("editban")
     .setDescription("Opens up a modal to edit a ban for a user.")
     .addStringOption((option: any) =>
-      option.setName("user").setDescription("Username or Userid"),
+      option.setName("UserID").setDescription("UserID"),
     ),
   async execute(interaction: any) {
     const userid =
-      interaction.options.getString("user") ?? "No userID Provided";
-
+      interaction.options.getString("UserID") ?? "No userID Provided";
     let ban = await getBan(interaction.client.db, userid);
     console.log("Ban found:", ban);
     const modal = new ModalBuilder()
@@ -31,7 +30,7 @@ module.exports = {
     const userInput = new TextInputBuilder()
       .setCustomId("userInput")
       .setStyle(TextInputStyle.Short)
-      .setPlaceholder("User ID/Username")
+      .setPlaceholder("UserID")
       .setRequired(true)
       .setValue(ban ? ban.UserID : "");
     const isBannedInput = new StringSelectMenuBuilder()
