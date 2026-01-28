@@ -36,6 +36,22 @@ export async function updateBan(db: any, banData: any) {
   return result;
 }
 
+export async function updateUnbanDate(db: any, { UserID, UnbanDate }: any) {
+  const collection = db.collection("Bans");
+  let result = await collection.updateOne(
+    {
+      UserID: UserID,
+    },
+    {
+      $set: {
+        UnbanDate: UnbanDate,
+      },
+    },
+  );
+
+  return result;
+}
+
 export async function unbanLengthCheckDatabase(db: any) {
   const collection = db.collection("Bans");
   await collection.updateMany(
