@@ -114,7 +114,7 @@ module.exports = {
         filter: (i: any) => i.user.id === interaction.user.id,
       })
       .then((interaction: any) =>
-        interaction.editReply("Thank you for your submission!"),
+        interaction.reply("Thank you for your submission!"),
       )
       .catch((err: any) =>
         console.log("No modal submit interaction was collected", err),
