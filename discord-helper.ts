@@ -11,7 +11,7 @@ export function getBanEmbed({
   let data = {
     embeds: [
       {
-        title: `Banned: ${UserID}`,
+        title: `Ban Information: ${UserID}`,
         type: `rich`,
         description: "",
         color: false ? 2105893 : Banned ? 15158332 : 2600544,
@@ -42,6 +42,15 @@ export function getBanEmbed({
             value: Proof || "[No Proof]",
             inline: false,
           },
+          ...(UnbanDate
+            ? [
+                {
+                  name: "Unban Date",
+                  value: new Date(UnbanDate).toISOString(),
+                  inline: false,
+                },
+              ]
+            : []),
         ],
       },
     ],

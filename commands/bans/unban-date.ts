@@ -37,17 +37,16 @@ module.exports = {
     // Unbandate format: number followed by D, H, M, Y, S (days, hours, minutes, years, seconds)
 
     if (!userid || !unbandate) {
-      let convertedDate = formatUnbanDate(unbandate);
-      console.log("Converted date:", convertedDate);
       await interaction.reply({
         content: "UserID and UnbanDate are required.",
         flags: 1 << 6, // Ephemeral
       });
       return;
     }
+    let date = formatUnbanDate(unbandate);
     await updateUnbanDate(interaction.client.db, {
       UserID: userid,
-      UnbanDate: unbandate,
+      UnbanDate: parseInt(unbandate) === 0 ? 0 : new Date(date).getTime(),
     });
     await interaction.reply({
       content: `Unban date for user ${userid} set to ${formatUnbanDate(
@@ -84,6 +83,7 @@ module.exports = {
   },
 };
 function formatUnbanDate(UnbanDate: any): string {
+  if (UnbanDate === 0) return "Permanent";
   const durationRegex = /(\d+)([DHMYS])/;
   const match = UnbanDate.toString().toUpperCase().match(durationRegex);
   if (!match) return "";
