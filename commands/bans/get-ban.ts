@@ -32,7 +32,7 @@ module.exports = {
       });
       return;
     }
-    console.log(formatUnbanDate(ban.UnbanDate));
+    console.log(ban.UnbanDate);
     let embed = getBanEmbed({
       UserID: ban.UserID,
       Banned: ban.Banned,
