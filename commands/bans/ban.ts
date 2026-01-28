@@ -102,11 +102,7 @@ module.exports = {
         time: 60_000,
         filter: (i: any) => i.user.id === interaction.user.id,
       })
-      .then(async (i: any) => {
-        await interaction.client.modals.get("banModal")(i, {
-          userid,
-        });
-      })
+      .then(interaction.client.modals.get("banModal"))
       .catch((err: any) =>
         console.log("No modal submit interaction was collected", err),
       );
