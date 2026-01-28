@@ -16,7 +16,7 @@ module.exports = {
     if (!interaction.isModalSubmit()) return;
     // get modal ID
     console.log("0.5");
-    if (interaction.customId !== "editban") return;
+    // if (interaction.customId !== "editban") return;
     console.log("1");
     try {
       //   console.log("Modal submitted:", interaction);
