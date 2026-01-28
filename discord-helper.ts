@@ -27,11 +27,11 @@ export function getBanEmbed({
             value: Banned.toString(),
             inline: true,
           },
-          {
-            name: "Length (in minutes)",
-            value: Length.toString(),
-            inline: false,
-          },
+          // {
+          //   name: "Length (in minutes)",
+          //   value: Length.toString(),
+          //   inline: false,
+          // },
           {
             name: "Reason",
             value: Reason || "[No Reason]",

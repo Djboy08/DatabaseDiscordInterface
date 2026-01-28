@@ -45,6 +45,10 @@ export async function updateUnbanDate(db: any, { UserID, UnbanDate }: any) {
     {
       $set: {
         UnbanDate: UnbanDate,
+        Length:
+          UnbanDate === 0
+            ? 0
+            : Math.round((UnbanDate.getTime() - new Date().getTime()) / 60000),
       },
     },
   );
