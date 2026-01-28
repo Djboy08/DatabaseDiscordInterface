@@ -18,7 +18,7 @@ const {
 module.exports = {
   roleNeeded: "987036412027240518",
   name: "banModal",
-  async execute(interaction: any) {
+  async execute(interaction: any, data: any) {
     // Get UserID from the modal submitter
     const userid = interaction.user.id;
 
@@ -26,7 +26,7 @@ module.exports = {
       let obj: any = {};
       obj.Banned =
         interaction.fields.getStringSelectValues("isBanned")[0] === "Banned";
-      obj.UserID = interaction.options.getString("userid") ?? undefined;
+      obj.UserID = data.userid ?? undefined;
       obj.Reason = interaction.fields.getTextInputValue("reasonInput");
       obj.Proof = interaction.fields.getTextInputValue("proofInput");
       obj.AdminID = interaction.user.id;
