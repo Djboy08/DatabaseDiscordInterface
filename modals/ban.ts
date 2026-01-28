@@ -22,6 +22,7 @@ module.exports = {
     // Get UserID from the modal submitter
     const userid = interaction.user.id;
     // Check if they have the role needed
+    console.log("Modal submitted:", interaction.user.id);
 
     try {
       //   console.log("Modal submitted:", interaction);
