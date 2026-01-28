@@ -17,24 +17,11 @@ const {
 
 module.exports = {
   roleNeeded: "987036412027240518",
-  //   data: new SlashCommandBuilder()
-  //     .setName("editban")
-  //     .setDescription("Opens up a modal to edit a ban for a user.")
-  //     .addStringOption((option: any) =>
-  //       option.setName("userid").setDescription("Roblox UserID"),
-  //     ),
+  name: "banModal",
   async execute(interaction: any) {
-    console.log(interaction);
     // Get UserID from the modal submitter
     const userid = interaction.user.id;
     // Check if they have the role needed
-    if (!interaction.member.roles.cache.has("987036412027240518")) {
-      await interaction.reply({
-        content: "You do not have permission to use this command.",
-        flags: 1 << 6, // Ephemeral
-      });
-      return;
-    }
 
     try {
       //   console.log("Modal submitted:", interaction);

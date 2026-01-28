@@ -18,6 +18,7 @@ declare module "discord.js" {
   interface Client {
     commands: Collection<string, any>;
     cooldowns: Collection<string, any>;
+    modals: Collection<string, any>;
     db: any;
   }
 }
@@ -43,6 +44,7 @@ const client = new Client({
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
+client.modals = new Collection();
 client.db = await mongoClient.db(Bun.env.DATABASE_NAME);
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
@@ -75,6 +77,27 @@ for (const file of eventFiles) {
     client.once(event.name, (...args) => event.execute(...args));
   } else {
     client.on(event.name, (...args) => event.execute(...args));
+  }
+}
+
+const modalsPath = path.join(__dirname, "modals");
+const modalFiles = fs
+  .readdirSync(modalsPath)
+  .filter((file: any) => file.endsWith(".js") || file.endsWith(".ts"));
+for (const file of modalFiles) {
+  const filePath = path.join(modalsPath, file);
+  const modal = require(filePath);
+  if ("execute" in modal) {
+    client.modals.set(modal.data.name, async (interaction: any) => {
+      if (!interaction.member.roles.cache.has(modal.roleNeeded)) {
+        await interaction.reply({
+          content: "You do not have permission to use this command.",
+          flags: 1 << 6, // Ephemeral
+        });
+        return;
+      }
+      await modal.execute(interaction);
+    });
   }
 }
 
