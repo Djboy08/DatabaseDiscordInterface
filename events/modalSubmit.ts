@@ -13,6 +13,8 @@ module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction: Interaction) {
     if (!interaction.isModalSubmit()) return;
+    // get modal ID
+    if (interaction.customId !== "editban") return;
 
     try {
       //   console.log("Modal submitted:", interaction);
