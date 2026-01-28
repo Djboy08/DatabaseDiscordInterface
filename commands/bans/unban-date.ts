@@ -27,7 +27,7 @@ module.exports = {
       option
         .setName("unbandate")
         .setDescription(
-          "Unbandate format: number followed by D, H, M, Y, S (days, hours, minutes, years, seconds)",
+          "number followed by D, H, M, Y, S (days, hours, minutes, years, seconds) 0 for permanent",
         )
         .setRequired(true),
     ),

@@ -18,13 +18,15 @@ module.exports = {
     .setName("get-ban")
     .setDescription("Gets the ban information for a user.")
     .addStringOption((option: any) =>
-      option.setName("userid").setDescription("Roblox UserID"),
+      option
+        .setName("userid")
+        .setDescription("Roblox UserID")
+        .setRequired(true),
     ),
   async execute(interaction: any) {
     const userid = interaction.options.getString("userid") ?? undefined;
     let ban = userid ? await getBan(interaction.client.db, userid) : null;
     ban.AdminName = `<@${ban.AdminID}>`;
-    console.log("Ban found:", ban);
     if (!ban) {
       await interaction.reply({
         content: `No ban found for user ${userid}.`,
@@ -32,7 +34,6 @@ module.exports = {
       });
       return;
     }
-    console.log(ban.UnbanDate);
     let embed = getBanEmbed({
       UserID: ban.UserID,
       Banned: ban.Banned,

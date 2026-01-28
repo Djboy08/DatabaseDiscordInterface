@@ -25,7 +25,7 @@ module.exports = {
       obj.AdminID = interaction.user.id;
       obj.AdminName = interaction.user.tag;
       obj.Length = 0;
-      obj.UnbanDate = null;
+      obj.UnbanDate = 0;
       obj.TestUniverse = false;
       await updateBan(interaction.client.db, obj);
       console.log("Parsed modal data:", obj);
