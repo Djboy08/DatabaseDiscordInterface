@@ -109,7 +109,7 @@ module.exports = {
 
     interaction.showModal(modal).then(async (response: any) => {
       const collectorFilter = (i: any) => i.user.id === interaction.user.id;
-
+      console.log("response:", response);
       try {
         const confirmation =
           await response.resource.message.awaitMessageComponent({
