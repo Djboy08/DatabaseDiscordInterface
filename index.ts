@@ -88,7 +88,7 @@ for (const file of modalFiles) {
   const filePath = path.join(modalsPath, file);
   const modal = require(filePath);
   if ("execute" in modal) {
-    client.modals.set(modal.data.name, async (interaction: any) => {
+    client.modals.set(modal.name, async (interaction: any) => {
       if (!interaction.member.roles.cache.has(modal.roleNeeded)) {
         await interaction.reply({
           content: "You do not have permission to use this command.",
