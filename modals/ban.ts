@@ -28,7 +28,7 @@ module.exports = {
     // Get UserID from the modal submitter
     const userid = interaction.user.id;
     // Check if they have the role needed
-    if (!interaction.member.roles.cache.has(this.roleNeeded)) {
+    if (!interaction.member.roles.cache.has("987036412027240518")) {
       await interaction.reply({
         content: "You do not have permission to use this command.",
         flags: 1 << 6, // Ephemeral
