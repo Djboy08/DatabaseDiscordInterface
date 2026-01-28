@@ -117,7 +117,7 @@ module.exports = {
         interaction.editReply("Thank you for your submission!"),
       )
       .catch((err: any) =>
-        console.log("No modal submit interaction was collected"),
+        console.log("No modal submit interaction was collected", err),
       );
   },
 };
