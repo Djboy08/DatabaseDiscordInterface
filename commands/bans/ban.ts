@@ -102,8 +102,8 @@ module.exports = {
         time: 60_000,
         filter: (i: any) => i.user.id === interaction.user.id,
       })
-      .then(async () => {
-        await interaction.client.modals.get("banModal")(interaction, {
+      .then(async (i: any) => {
+        await interaction.client.modals.get("banModal")(i, {
           userid,
         });
       })
