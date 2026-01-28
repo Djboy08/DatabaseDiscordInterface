@@ -24,6 +24,7 @@ module.exports = {
   //       option.setName("userid").setDescription("Roblox UserID"),
   //     ),
   async execute(interaction: any) {
+    console.log(interaction);
     // Get UserID from the modal submitter
     const userid = interaction.user.id;
     // Check if they have the role needed
