@@ -15,7 +15,7 @@ module.exports = {
     if (!interaction.isModalSubmit()) return;
     // get modal ID
     if (interaction.customId !== "editban") return;
-
+    console.log("1");
     try {
       //   console.log("Modal submitted:", interaction);
       let obj: any = {};
@@ -29,7 +29,9 @@ module.exports = {
       obj.Length = 0;
       obj.UnbanDate = 0;
       obj.TestUniverse = false;
+      console.log("1.5");
       await updateBan(interaction.client.db, obj);
+      console.log("2");
       console.log("Parsed modal data:", obj);
       if (obj.Banned === true) {
         await messageservice_send_payload({
