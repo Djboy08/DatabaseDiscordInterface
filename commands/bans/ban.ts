@@ -107,23 +107,18 @@ module.exports = {
     modal.addLabelComponents(reasonLabel);
     modal.addLabelComponents(proofLabel);
 
-    interaction.showModal(modal).then(async (response: any) => {
-      const collectorFilter = (i: any) => i.user.id === interaction.user.id;
-      console.log("response:", response);
-      try {
-        const confirmation =
-          await response.resource.message.awaitMessageComponent({
-            filter: collectorFilter,
-            time: 60_000,
-          });
-        console.log("Confirmation received:", confirmation);
-      } catch {
-        await interaction.editReply({
-          content: "Confirmation not received within 1 minute, cancelling",
-          components: [],
-        });
-      }
-    });
+    await interaction.showModal(modal);
+    interaction
+      .awaitModalSubmit({
+        time: 60_000,
+        filter: (i: any) => i.user.id === interaction.user.id,
+      })
+      .then((interaction: any) =>
+        interaction.editReply("Thank you for your submission!"),
+      )
+      .catch((err: any) =>
+        console.log("No modal submit interaction was collected"),
+      );
   },
 };
 function formatUnbanDate(UnbanDate: any): string {
