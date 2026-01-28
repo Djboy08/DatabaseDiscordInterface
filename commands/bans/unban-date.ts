@@ -46,10 +46,7 @@ module.exports = {
     let date = formatUnbanDate(unbandate);
     await updateUnbanDate(interaction.client.db, {
       UserID: userid,
-      UnbanDate:
-        parseInt(unbandate) === 0
-          ? 0
-          : new Date(formatUnbanDate(unbandate)).getTime(),
+      UnbanDate: parseInt(unbandate) === 0 ? 0 : new Date(date),
     });
     await interaction.reply({
       content: `Unban date for user ${userid} set to ${formatUnbanDate(
