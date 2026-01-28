@@ -9,6 +9,7 @@ const {
   TextDisplayBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
+  WebhookClient,
 } = require("discord.js");
 
 module.exports = {
@@ -25,7 +26,9 @@ module.exports = {
     .addStringOption((option: any) =>
       option
         .setName("unbandate")
-        .setDescription("Unban date in format, e.g., 5D, 12H, 1Y, etc.")
+        .setDescription(
+          "Unbandate format: number followed by D, H, M, Y, S (days, hours, minutes, years, seconds)",
+        )
         .setRequired(true),
     ),
   async execute(interaction: any) {
@@ -42,15 +45,41 @@ module.exports = {
       });
       return;
     }
-    // await updateUnbanDate(interaction.client.db, {
-    //   UserID: userid,
-    //   UnbanDate: unbandate,
-    // });
+    await updateUnbanDate(interaction.client.db, {
+      UserID: userid,
+      UnbanDate: unbandate,
+    });
     await interaction.reply({
       content: `Unban date for user ${userid} set to ${formatUnbanDate(
         unbandate,
       )}.`,
       flags: 1 << 6, // Ephemeral
+    });
+    const webhookClient = new WebhookClient({
+      url: Bun.env.DISCORD_BAN_LOG_WEBHOOK_URL,
+    });
+    await webhookClient.send({
+      embeds: [
+        {
+          title: "Unban Date Updated",
+          color: 0x00ff00,
+          fields: [
+            {
+              name: "UserID",
+              value: userid,
+              inline: true,
+            },
+            {
+              name: "New Unban Date",
+              value: formatUnbanDate(unbandate),
+              inline: true,
+            },
+          ],
+        },
+      ],
+      content: `Unban date for user ${userid} set to ${formatUnbanDate(
+        unbandate,
+      )}. by ${interaction.user.tag} (${interaction.user.id})`,
     });
   },
 };
