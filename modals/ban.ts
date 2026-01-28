@@ -2,8 +2,6 @@ const { messageservice_send_payload } = require("../opencloud-helper");
 const { updateBan } = require("../database-helper");
 const { getBanEmbed } = require("../discord-helper");
 
-const { getBan } = require("../../database-helper");
-
 const {
   SlashCommandBuilder,
   LabelBuilder,
