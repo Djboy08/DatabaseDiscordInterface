@@ -39,7 +39,7 @@ module.exports = {
       Length: ban.Length,
       Reason: ban.Reason,
       Proof: ban.Proof,
-      UnbanDate: formatUnbanDate(ban.UnbanDate),
+      UnbanDate: ban.UnbanDate,
       AdminName: ban.AdminName,
       TestUniverse: ban.TestUniverse,
     });
