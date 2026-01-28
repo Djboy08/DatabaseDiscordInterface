@@ -30,12 +30,6 @@ module.exports = {
     const modal = new ModalBuilder()
       .setCustomId("banModal")
       .setTitle("Ban Form");
-    const userInput = new TextInputBuilder()
-      .setCustomId("userInput")
-      .setStyle(TextInputStyle.Short)
-      .setPlaceholder("UserID")
-      .setRequired(true)
-      .setValue(ban ? ban.UserID : "");
     const isBannedInput = new StringSelectMenuBuilder()
       .setCustomId("isBanned")
       .setPlaceholder("Is the user banned?")
@@ -61,10 +55,6 @@ module.exports = {
       .setLabel("Enforced ban")
       // Set string select menu as component of the label
       .setStringSelectMenuComponent(isBannedInput);
-    const userLabel = new LabelBuilder()
-      .setLabel("User ID/Username")
-      .setDescription("User to ban")
-      .setTextInputComponent(userInput);
     // const unbanDateInput = new TextInputBuilder()
     //   .setCustomId("unbanDateInput")
     //   .setStyle(TextInputStyle.Short)
@@ -102,9 +92,7 @@ module.exports = {
       ? await interaction.client.users.fetch(ban.AdminID)
       : { username: "Admin not found" };
 
-    modal.addLabelComponents(userLabel);
     modal.addLabelComponents(isBannedLabel);
-    // modal.addLabelComponents(unbanLabel);
     modal.addLabelComponents(reasonLabel);
     modal.addLabelComponents(proofLabel);
 
