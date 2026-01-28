@@ -96,6 +96,7 @@ for (const file of modalFiles) {
         });
         return;
       }
+      console.log("Executing modal:", modal.name);
       await modal.execute(interaction);
     });
   }
