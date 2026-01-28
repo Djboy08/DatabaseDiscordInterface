@@ -1,4 +1,5 @@
 const { getBan } = require("../../database-helper");
+const banModal = require("../../modals/ban.ts");
 
 const {
   SlashCommandBuilder,
@@ -113,9 +114,7 @@ module.exports = {
         time: 60_000,
         filter: (i: any) => i.user.id === interaction.user.id,
       })
-      .then((interaction: any) =>
-        interaction.reply("Thank you for your submission!"),
-      )
+      .then(banModal.execute)
       .catch((err: any) =>
         console.log("No modal submit interaction was collected", err),
       );
