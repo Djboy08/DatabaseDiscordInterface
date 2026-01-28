@@ -12,8 +12,10 @@ const {
 module.exports = {
   name: Events.InteractionCreate,
   async execute(interaction: Interaction) {
+    console.log("0");
     if (!interaction.isModalSubmit()) return;
     // get modal ID
+    console.log("0.5");
     if (interaction.customId !== "editban") return;
     console.log("1");
     try {
