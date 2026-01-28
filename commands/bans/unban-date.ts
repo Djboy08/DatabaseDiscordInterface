@@ -56,7 +56,7 @@ module.exports = {
 };
 function formatUnbanDate(UnbanDate: any): string {
   const durationRegex = /(\d+)([DHMYS])/;
-  const match = UnbanDate.toString().match(durationRegex);
+  const match = UnbanDate.toString().toUpperCase().match(durationRegex);
   if (!match) return "";
 
   const value = parseInt(match[1]);
