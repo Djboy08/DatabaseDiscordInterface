@@ -25,6 +25,7 @@ module.exports = {
     ),
   async execute(interaction: any) {
     const userid = interaction.options.getString("userid") ?? undefined;
+    console.log("Userid:", userid);
     let ban = userid ? await getBan(interaction.client.db, userid) : null;
     console.log("Ban found:", ban);
     const modal = new ModalBuilder()
@@ -79,7 +80,7 @@ module.exports = {
       .setCustomId("reasonInput")
       .setStyle(TextInputStyle.Paragraph)
       .setPlaceholder("exploiting, abusing, etc.")
-      .setValue(ban ? ban.Reason : "");
+      .setValue(ban ? (ban.Reason ?? "") : "");
 
     const reasonLabel = new LabelBuilder()
       .setLabel("What is the reason for the ban?")
@@ -90,7 +91,7 @@ module.exports = {
       .setCustomId("proofInput")
       .setStyle(TextInputStyle.Paragraph)
       .setPlaceholder("Links, etc.")
-      .setValue(ban ? ban.Proof : "");
+      .setValue(ban ? (ban.Proof ?? "") : "");
 
     const proofLabel = new LabelBuilder()
       .setLabel("What is the proof for the ban?")
