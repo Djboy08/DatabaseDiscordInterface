@@ -185,8 +185,10 @@ const server = Bun.serve({
           const hook = new WebhookClient({
             url: Bun.env.DISCORD_TRADE_LOG_WEBHOOK_URL!,
           });
+          console.log("1");
           const body = await req.json();
           const msg = body.msg;
+          console.log("msg", msg);
           let regex = /Account Age - ([\s\S]*?) Days/g;
           let find = msg.match(regex);
           let isAgeBelow100 = false;
