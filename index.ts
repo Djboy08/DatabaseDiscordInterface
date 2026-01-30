@@ -129,6 +129,45 @@ const server = Bun.serve({
         return Response.json({ success: false });
       }
     },
+    "/exploit/webhook": {
+      POST: async (req: Request) => {
+        console.log("exploit");
+        try {
+          let headers = req.headers;
+          if (
+            !headers.get("authorization") ||
+            headers.get("authorization") != GUID
+          ) {
+            console.log("NO AUTHORIZATION");
+            return Response.json({
+              success: false,
+              error: "Incorrect Authorization",
+            });
+          }
+
+          const hook = new WebhookClient({
+            url: Bun.env.DISCORD_EXPLOIT_LOG_WEBHOOK_URL!,
+          });
+          const body = await req.json();
+          const msg = body.msg;
+          // let randomadmin = await this.discord.getRandomAdmin();
+          // randomadmin = randomadmin || "No Admin Is Online";
+          // if(msg.search("Dealing damage faster than a usual rate.") >= 0) return;
+          const embed = new EmbedBuilder()
+            .setTitle("Exploit Logged")
+            .setFooter({ text: "from game" })
+            .setDescription(msg);
+          // hook.send({content: `<@${randomadmin.user.id}>`, embeds: [embed]});
+          await hook.send({
+            content: `Temp removed admin ping`,
+            embeds: [embed],
+          });
+          return Response.json({ success: true });
+        } catch (er) {
+          return Response.json({ success: false, error: er });
+        }
+      },
+    },
     "/trade/webhook": {
       POST: async (req: Request) => {
         console.log("Received trade webhook");
