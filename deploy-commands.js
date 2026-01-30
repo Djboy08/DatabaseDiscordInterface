@@ -33,6 +33,9 @@ const rest = new REST().setToken(Bun.env.DISCORD_TOKEN);
 // and deploy your commands!
 (async () => {
     try {
+        // DELETE FIRST
+        await rest
+            .put(Routes.applicationGuildCommands(Bun.env.DISCORD_CLIENT_ID, Bun.env.DISCORD_GUILD_ID), { body: [] })
         console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
         // The put method is used to fully refresh all commands in the guild with the current set

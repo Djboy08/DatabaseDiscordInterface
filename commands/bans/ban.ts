@@ -110,7 +110,7 @@ module.exports = {
     await interaction.showModal(modal);
     interaction
       .awaitModalSubmit({
-        time: 60_000,
+        time: 320_000,
         filter: (i: any) => i.user.id === interaction.user.id,
       })
       .then(async (i: any) => {
