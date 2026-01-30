@@ -10,6 +10,7 @@ const {
   TextDisplayBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
+  MessageFlags,
 } = require("discord.js");
 
 module.exports = {
@@ -28,9 +29,8 @@ module.exports = {
     console.log("Userid:", userid);
     let ban = userid ? await getBan(interaction.client.db, userid) : null;
     console.log("Ban found:", ban);
-    const modal = new ModalBuilder()
-      .setCustomId("banModal")
-      .setTitle("Ban Form");
+    const modalId = `banModal:${interaction.user.id}:${Date.now()}`;
+    const modal = new ModalBuilder().setCustomId(modalId).setTitle("Ban Form");
     const unbanDateInput = new TextInputBuilder()
       .setCustomId("unbanDateInput")
       .setStyle(TextInputStyle.Short)
@@ -103,18 +103,25 @@ module.exports = {
     modal.addLabelComponents(proofLabel);
     modal.addLabelComponents(unbanLabel);
 
-    await interaction.showModal(modal);
-    interaction
-      .awaitModalSubmit({
+    try {
+      await interaction.showModal(modal);
+      let modalInteraction = await interaction.awaitModalSubmit({
         time: 320_000,
-        filter: (i: any) => i.user.id === interaction.user.id,
-      })
-      .then(async (i: any) => {
-        await interaction.client.modals.get("banModal")(i, interaction);
-      })
-      .catch((err: any) =>
-        console.log("No modal submit interaction was collected", err),
+        filter: (i: any) =>
+          i.customId === modalId && i.user.id === interaction.user.id,
+      });
+
+      await interaction.client.modals.get("banModal")(
+        modalInteraction,
+        interaction,
       );
+    } catch (error) {
+      console.error("Error showing modal or awaiting submission:", error);
+      await interaction.reply({
+        content: "There was an error while executing this command!",
+        flags: MessageFlags.Ephemeral,
+      });
+    }
   },
 };
 function formatUnbanDate(UnbanDate: any): string | Date {
