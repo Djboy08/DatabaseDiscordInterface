@@ -106,7 +106,7 @@ module.exports = {
     try {
       await interaction.showModal(modal);
       let modalInteraction = await interaction.awaitModalSubmit({
-        time: 320_000,
+        time: 180000,
         filter: (i: any) =>
           i.customId === modalId && i.user.id === interaction.user.id,
       });
