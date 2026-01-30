@@ -72,7 +72,7 @@ module.exports = {
         });
         await webhookClient.send({
           ...embed,
-          content: `Unbanned user ${obj.UserID} by ${obj.AdminName} (${obj.AdminID}) with reason: ${obj.Reason}`,
+          content: `Unbanned user ${obj.UserID} by ${obj.AdminName} (${obj.AdminID}) with reason: "${reason}"`,
         });
       } catch (error) {
         console.error(error);
