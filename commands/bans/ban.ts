@@ -36,6 +36,9 @@ module.exports = {
       .setPlaceholder("5D, 12H, 1Y, etc. Leave blank for permanent ban.")
       .setRequired(false)
       .setValue(ban ? formatUnbanDate(ban.UnbanDate) : "");
+    const unbanLabel = new LabelBuilder()
+      .setLabel("When should the ban be lifted?")
+      .setDescription("Unban Date");
     // const isBannedInput = new StringSelectMenuBuilder()
     //   .setCustomId("isBanned")
     //   .setPlaceholder("Is the user banned?")
@@ -101,6 +104,7 @@ module.exports = {
     // modal.addLabelComponents(isBannedLabel);
     modal.addLabelComponents(reasonLabel);
     modal.addLabelComponents(proofLabel);
+    modal.addLabelComponents(unbanLabel);
 
     await interaction.showModal(modal);
     interaction
