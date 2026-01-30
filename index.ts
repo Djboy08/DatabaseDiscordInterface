@@ -119,6 +119,7 @@ setInterval(async () => {
 
 const GUID = "46a465b4c07e4bb18fed4f83667fb03c";
 const server = Bun.serve({
+  port: 3000,
   // `routes` requires Bun v1.2.3+
   routes: {
     // Static routes
