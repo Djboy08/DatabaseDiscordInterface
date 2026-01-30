@@ -88,17 +88,20 @@ for (const file of modalFiles) {
   const filePath = path.join(modalsPath, file);
   const modal = require(filePath);
   if ("execute" in modal) {
-    client.modals.set(modal.name, async (interaction: any, data: any) => {
-      if (!interaction.member.roles.cache.has(modal.roleNeeded)) {
-        await interaction.reply({
-          content: "You do not have permission to use this command.",
-          flags: 1 << 6, // Ephemeral
-        });
-        return;
-      }
-      console.log("Executing modal:", modal.name);
-      await modal.execute(interaction, data);
-    });
+    client.modals.set(
+      modal.name,
+      async (interaction: any, initalInteraction: any) => {
+        if (!interaction.member.roles.cache.has(modal.roleNeeded)) {
+          await interaction.reply({
+            content: "You do not have permission to use this command.",
+            flags: 1 << 6, // Ephemeral
+          });
+          return;
+        }
+        console.log("Executing modal:", modal.name);
+        await modal.execute(interaction, initalInteraction);
+      },
+    );
   }
 }
 

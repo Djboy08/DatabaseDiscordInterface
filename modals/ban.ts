@@ -18,14 +18,14 @@ const {
 module.exports = {
   roleNeeded: "987036412027240518",
   name: "banModal",
-  async execute(interaction: any, data: any) {
+  async execute(interaction: any, initalInteraction: any) {
     // Get UserID from the modal submitter
     const userid = interaction.user.id;
 
     try {
       let obj: any = {};
       obj.Banned = true;
-      obj.UserID = data.userid ?? undefined;
+      obj.UserID = initalInteraction.options.getString("userid").trim();
       obj.Reason = interaction.fields.getTextInputValue("reasonInput");
       obj.Proof = interaction.fields.getTextInputValue("proofInput");
       obj.AdminID = interaction.user.id;
@@ -54,7 +54,7 @@ module.exports = {
       });
       await webhookClient.send({
         ...embed,
-        content: `Ban updated by ${obj.AdminName} (${obj.AdminID})`,
+        content: `Banned user ${obj.UserID} by ${obj.AdminName} (${obj.AdminID})`,
       });
     } catch (error) {
       console.error(error);
