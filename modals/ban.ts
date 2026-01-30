@@ -24,15 +24,16 @@ module.exports = {
 
     try {
       let obj: any = {};
-      obj.Banned =
-        interaction.fields.getStringSelectValues("isBanned")[0] === "Banned";
+      obj.Banned = true;
       obj.UserID = data.userid ?? undefined;
       obj.Reason = interaction.fields.getTextInputValue("reasonInput");
       obj.Proof = interaction.fields.getTextInputValue("proofInput");
       obj.AdminID = interaction.user.id;
       obj.AdminName = interaction.user.tag;
       obj.Length = 0;
-      obj.UnbanDate = 0;
+      obj.UnbanDate = new Date(
+        formatUnbanDate(interaction.fields.getTextInputValue("unbanDateInput")),
+      );
       obj.TestUniverse = false;
       await updateBan(interaction.client.db, obj);
       console.log("Parsed modal data:", obj);
@@ -71,37 +72,41 @@ module.exports = {
     }
   },
 };
-function formatUnbanDate(UnbanDate: any): string {
-  const durationRegex = /(\d+)([DHMYS])/;
-  const match = UnbanDate.toString().match(durationRegex);
-  if (!match) return "";
+function formatUnbanDate(UnbanDate: any): string | Date {
+  // If the UnbanDate is in a duration format (e.g., "5D", "12H"), convert it to an ISO date
+  // Otherwise if its an actual ISO date, return that
+  if (typeof UnbanDate === "string" && /^[0-9]+[DHMYS]$/.test(UnbanDate)) {
+    const durationRegex = /(\d+)([DHMYS])/;
+    const match = UnbanDate.toString().match(durationRegex);
+    if (!match) return "";
 
-  const value = parseInt(match[1]);
-  const unit = match[2];
+    const value = parseInt(match[1]);
+    const unit = match[2];
 
-  const now = new Date();
-  let unbanDate = new Date(now);
+    const now = new Date();
+    let unbanDate = new Date(now);
 
-  switch (unit) {
-    case "D":
-      unbanDate.setDate(now.getDate() + value);
-      break;
-    case "H":
-      unbanDate.setHours(now.getHours() + value);
-      break;
-    case "M":
-      unbanDate.setMinutes(now.getMinutes() + value);
-      break;
-    case "S":
-      unbanDate.setSeconds(now.getSeconds() + value);
-      break;
-    case "Y":
-      unbanDate.setFullYear(now.getFullYear() + value);
-      break;
+    switch (unit) {
+      case "D":
+        unbanDate.setDate(now.getDate() + value);
+        break;
+      case "H":
+        unbanDate.setHours(now.getHours() + value);
+        break;
+      case "M":
+        unbanDate.setMinutes(now.getMinutes() + value);
+        break;
+      case "S":
+        unbanDate.setSeconds(now.getSeconds() + value);
+        break;
+      case "Y":
+        unbanDate.setFullYear(now.getFullYear() + value);
+        break;
+    }
+
+    return unbanDate.toISOString();
   }
-
-  return unbanDate.toISOString();
   if (!UnbanDate) return "";
   const date = new Date(UnbanDate);
-  return date.toISOString().slice(0, 10); // Format as YYYY-MM-DD
+  return date.toISOString();
 }

@@ -30,31 +30,37 @@ module.exports = {
     const modal = new ModalBuilder()
       .setCustomId("banModal")
       .setTitle("Ban Form");
-    const isBannedInput = new StringSelectMenuBuilder()
-      .setCustomId("isBanned")
-      .setPlaceholder("Is the user banned?")
-      // Modal only property on select menus to prevent submission, defaults to true
-      .setRequired(true)
-      .addOptions(
-        // String select menu options
-        new StringSelectMenuOptionBuilder()
-          // Label displayed to user
-          .setLabel("Banned")
-          // Description of option
-          .setDescription("Banned")
-          // Value returned to you in modal submission
-          .setValue("Banned")
-          .setDefault(ban ? ban.Banned === true : false),
-        new StringSelectMenuOptionBuilder()
-          .setLabel("Unbanned")
-          .setDescription("Unbanned")
-          .setValue("Unbanned")
-          .setDefault(ban ? ban.Banned === false : false),
-      );
-    const isBannedLabel = new LabelBuilder()
-      .setLabel("Enforced ban")
-      // Set string select menu as component of the label
-      .setStringSelectMenuComponent(isBannedInput);
+    const unbanDateInput = new TextInputBuilder()
+      .setCustomId("unbanDateInput")
+      .setStyle(TextInputStyle.Short)
+      .setPlaceholder("5D, 12H, 1Y, etc. Leave blank for permanent ban.")
+      .setRequired(false)
+      .setValue(ban ? formatUnbanDate(ban.UnbanDate) : "");
+    // const isBannedInput = new StringSelectMenuBuilder()
+    //   .setCustomId("isBanned")
+    //   .setPlaceholder("Is the user banned?")
+    //   // Modal only property on select menus to prevent submission, defaults to true
+    //   .setRequired(true)
+    //   .addOptions(
+    //     // String select menu options
+    //     new StringSelectMenuOptionBuilder()
+    //       // Label displayed to user
+    //       .setLabel("Banned")
+    //       // Description of option
+    //       .setDescription("Banned")
+    //       // Value returned to you in modal submission
+    //       .setValue("Banned")
+    //       .setDefault(ban ? ban.Banned === true : false),
+    //     new StringSelectMenuOptionBuilder()
+    //       .setLabel("Unbanned")
+    //       .setDescription("Unbanned")
+    //       .setValue("Unbanned")
+    //       .setDefault(ban ? ban.Banned === false : false),
+    //   );
+    // const isBannedLabel = new LabelBuilder()
+    //   .setLabel("Enforced ban")
+    //   // Set string select menu as component of the label
+    //   .setStringSelectMenuComponent(isBannedInput);
     // const unbanDateInput = new TextInputBuilder()
     //   .setCustomId("unbanDateInput")
     //   .setStyle(TextInputStyle.Short)
@@ -92,7 +98,7 @@ module.exports = {
       ? await interaction.client.users.fetch(ban.AdminID)
       : { username: "Admin not found" };
 
-    modal.addLabelComponents(isBannedLabel);
+    // modal.addLabelComponents(isBannedLabel);
     modal.addLabelComponents(reasonLabel);
     modal.addLabelComponents(proofLabel);
 
@@ -108,37 +114,41 @@ module.exports = {
       );
   },
 };
-function formatUnbanDate(UnbanDate: any): string {
-  const durationRegex = /(\d+)([DHMYS])/;
-  const match = UnbanDate.toString().match(durationRegex);
-  if (!match) return "";
+function formatUnbanDate(UnbanDate: any): string | Date {
+  // If the UnbanDate is in a duration format (e.g., "5D", "12H"), convert it to an ISO date
+  // Otherwise if its an actual ISO date, return that
+  if (typeof UnbanDate === "string" && /^[0-9]+[DHMYS]$/.test(UnbanDate)) {
+    const durationRegex = /(\d+)([DHMYS])/;
+    const match = UnbanDate.toString().match(durationRegex);
+    if (!match) return "";
 
-  const value = parseInt(match[1]);
-  const unit = match[2];
+    const value = parseInt(match[1]);
+    const unit = match[2];
 
-  const now = new Date();
-  let unbanDate = new Date(now);
+    const now = new Date();
+    let unbanDate = new Date(now);
 
-  switch (unit) {
-    case "D":
-      unbanDate.setDate(now.getDate() + value);
-      break;
-    case "H":
-      unbanDate.setHours(now.getHours() + value);
-      break;
-    case "M":
-      unbanDate.setMinutes(now.getMinutes() + value);
-      break;
-    case "S":
-      unbanDate.setSeconds(now.getSeconds() + value);
-      break;
-    case "Y":
-      unbanDate.setFullYear(now.getFullYear() + value);
-      break;
+    switch (unit) {
+      case "D":
+        unbanDate.setDate(now.getDate() + value);
+        break;
+      case "H":
+        unbanDate.setHours(now.getHours() + value);
+        break;
+      case "M":
+        unbanDate.setMinutes(now.getMinutes() + value);
+        break;
+      case "S":
+        unbanDate.setSeconds(now.getSeconds() + value);
+        break;
+      case "Y":
+        unbanDate.setFullYear(now.getFullYear() + value);
+        break;
+    }
+
+    return unbanDate.toISOString();
   }
-
-  return unbanDate.toISOString();
   if (!UnbanDate) return "";
   const date = new Date(UnbanDate);
-  return date.toISOString().slice(0, 10); // Format as YYYY-MM-DD
+  return date.toISOString();
 }
