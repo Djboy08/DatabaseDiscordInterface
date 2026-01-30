@@ -130,7 +130,7 @@ const server = Bun.serve({
       }
     },
     "/trade/webhook": {
-      PUT: async (req: Request) => {
+      POST: async (req: Request) => {
         try {
           let headers = req.headers;
           if (
