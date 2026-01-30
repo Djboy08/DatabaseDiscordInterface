@@ -131,6 +131,7 @@ const server = Bun.serve({
     },
     "/trade/webhook": {
       POST: async (req: Request) => {
+        console.log("Received trade webhook");
         try {
           let headers = req.headers;
           if (
