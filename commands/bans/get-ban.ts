@@ -26,7 +26,7 @@ module.exports = {
   async execute(interaction: any) {
     const userid = interaction.options.getString("userid") ?? undefined;
     let ban = userid ? await getBan(interaction.client.db, userid) : null;
-    ban.AdminName = `<@${ban.AdminID}>`;
+    ban.AdminName = `<@${ban?.AdminID ?? "System?"}>`;
     if (!ban) {
       await interaction.reply({
         content: `No ban found for user ${userid}.`,
