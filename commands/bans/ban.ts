@@ -38,7 +38,8 @@ module.exports = {
       .setValue(ban ? formatUnbanDate(ban.UnbanDate) : "");
     const unbanLabel = new LabelBuilder()
       .setLabel("When should the ban be lifted?")
-      .setDescription("Unban Date");
+      .setDescription("Unban Date")
+      .setTextInputComponent(unbanDateInput);
     // const isBannedInput = new StringSelectMenuBuilder()
     //   .setCustomId("isBanned")
     //   .setPlaceholder("Is the user banned?")
