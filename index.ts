@@ -123,17 +123,8 @@ const server = Bun.serve({
   // `routes` requires Bun v1.2.3+
   routes: {
     // Static routes
-    "/api/bansv4": (req) => {
-      console.log("Bans Fetched at " + new Date().toISOString());
-      if (BANS) {
-        return Response.json(BANS);
-      } else {
-        return Response.json({ success: false });
-      }
-    },
-    "/exploit/webhook": {
+    "/exploit/webhook/": {
       POST: async (req: Request) => {
-        console.log("Exploit Webhook Called");
         try {
           let headers = req.headers;
           if (
@@ -170,9 +161,8 @@ const server = Bun.serve({
         }
       },
     },
-    "/trade/webhook": {
+    "/trade/webhook/": {
       POST: async (req: Request) => {
-        console.log("Trade Webhook Called");
         try {
           let headers = req.headers;
           if (
