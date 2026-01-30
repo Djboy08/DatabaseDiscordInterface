@@ -98,11 +98,6 @@ module.exports = {
       .setDescription("Proof")
       .setTextInputComponent(proofInput);
 
-    //   Fetch the discord user's name from the admin id (discord id)
-    const admin = ban
-      ? await interaction.client.users.fetch(ban.AdminID)
-      : { username: "Admin not found" };
-
     // modal.addLabelComponents(isBannedLabel);
     modal.addLabelComponents(reasonLabel);
     modal.addLabelComponents(proofLabel);
