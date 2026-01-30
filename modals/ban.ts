@@ -16,7 +16,7 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  roleNeeded: "987036412027240518",
+  roleNeeded: "418694554674266113",
   name: "banModal",
   async execute(interaction: any, initalInteraction: any) {
     // Get UserID from the modal submitter

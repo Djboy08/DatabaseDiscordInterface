@@ -12,7 +12,7 @@ const {
 } = require("discord.js");
 
 module.exports = {
-  roleNeeded: "418694554674266113",
+  roleNeeded: "918694554674266113",
   data: new SlashCommandBuilder()
     .setName("editban")
     .setDescription("Opens up a modal to edit a ban for a user.")
